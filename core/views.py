@@ -2,6 +2,19 @@ from django.http import JsonResponse
 
 from .models import Category, Product, Tag
 
+
+def api_root(request):
+    return JsonResponse({
+        "name": "Remarcable Product API",
+        "status": "ok",
+        "endpoints": {
+            "products": "/api/products/",
+            "categories": "/api/categories/",
+            "tags": "/api/tags/",
+        },
+    })
+
+
 def product_list(request):
     products = (
         Product.objects

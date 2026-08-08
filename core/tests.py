@@ -3,6 +3,22 @@ from django.test import TestCase
 from .models import Category, Product, Tag
 
 
+class ApiRootTests(TestCase):
+    def test_root_describes_the_api(self):
+        response = self.client.get("/")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), {
+            "name": "Remarcable Product API",
+            "status": "ok",
+            "endpoints": {
+                "products": "/api/products/",
+                "categories": "/api/categories/",
+                "tags": "/api/tags/",
+            },
+        })
+
+
 class ProductListTests(TestCase):
     def setUp(self):
         category = Category.objects.create(name="Electronics")

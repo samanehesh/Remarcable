@@ -150,6 +150,14 @@ trailing slashes defensively before constructing endpoint URLs.
 
 ## API
 
+### Root
+
+```text
+GET /
+```
+
+Returns the API name, service status, and links to the available endpoints.
+
 ### Products
 
 ```text
