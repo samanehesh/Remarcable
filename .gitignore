@@ -38,3 +38,6 @@ frontend/*.pem
 .DS_Store
 Thumbs.db
 .vscode/
+
+# Django collected static files
+staticfiles/

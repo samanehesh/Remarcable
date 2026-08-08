@@ -1,0 +1,367 @@
+[
+{
+  "model": "core.category",
+  "pk": 1,
+  "fields": {
+    "name": "Electronics"
+  }
+},
+{
+  "model": "core.category",
+  "pk": 2,
+  "fields": {
+    "name": "Home & Kitchen"
+  }
+},
+{
+  "model": "core.category",
+  "pk": 3,
+  "fields": {
+    "name": "Tools"
+  }
+},
+{
+  "model": "core.category",
+  "pk": 4,
+  "fields": {
+    "name": "Office"
+  }
+},
+{
+  "model": "core.category",
+  "pk": 5,
+  "fields": {
+    "name": "Sports & Outdoors"
+  }
+},
+{
+  "model": "core.tag",
+  "pk": 1,
+  "fields": {
+    "name": "Portable"
+  }
+},
+{
+  "model": "core.tag",
+  "pk": 2,
+  "fields": {
+    "name": "Popular"
+  }
+},
+{
+  "model": "core.tag",
+  "pk": 3,
+  "fields": {
+    "name": "New"
+  }
+},
+{
+  "model": "core.tag",
+  "pk": 4,
+  "fields": {
+    "name": "Sale"
+  }
+},
+{
+  "model": "core.tag",
+  "pk": 5,
+  "fields": {
+    "name": "Wireless"
+  }
+},
+{
+  "model": "core.tag",
+  "pk": 6,
+  "fields": {
+    "name": "Durable"
+  }
+},
+{
+  "model": "core.tag",
+  "pk": 7,
+  "fields": {
+    "name": "Eco-Friendly"
+  }
+},
+{
+  "model": "core.tag",
+  "pk": 8,
+  "fields": {
+    "name": "Compact"
+  }
+},
+{
+  "model": "core.tag",
+  "pk": 9,
+  "fields": {
+    "name": "Premium"
+  }
+},
+{
+  "model": "core.tag",
+  "pk": 10,
+  "fields": {
+    "name": "Beginner-Friendly"
+  }
+},
+{
+  "model": "core.product",
+  "pk": 1,
+  "fields": {
+    "name": "Bluetooth Speaker",
+    "description": "Portable wireless speaker for home and outdoor use.",
+    "category": 1,
+    "tags": [
+      1,
+      2
+    ]
+  }
+},
+{
+  "model": "core.product",
+  "pk": 2,
+  "fields": {
+    "name": "Wireless Mouse",
+    "description": "Compact wireless mouse designed for everyday office and home use.",
+    "category": 1,
+    "tags": [
+      5,
+      8
+    ]
+  }
+},
+{
+  "model": "core.product",
+  "pk": 3,
+  "fields": {
+    "name": "Mechanical Keyboard",
+    "description": "Responsive mechanical keyboard designed for comfortable and accurate typing.",
+    "category": 1,
+    "tags": [
+      2,
+      9
+    ]
+  }
+},
+{
+  "model": "core.product",
+  "pk": 4,
+  "fields": {
+    "name": "USB-C Charger",
+    "description": "Compact USB-C charger for fast and convenient device charging.",
+    "category": 1,
+    "tags": [
+      1,
+      8
+    ]
+  }
+},
+{
+  "model": "core.product",
+  "pk": 5,
+  "fields": {
+    "name": "Noise Cancelling Headphones",
+    "description": "Wireless headphones with noise cancellation for focused listening.",
+    "category": 1,
+    "tags": [
+      5,
+      9
+    ]
+  }
+},
+{
+  "model": "core.product",
+  "pk": 6,
+  "fields": {
+    "name": "Coffee Maker",
+    "description": "Compact coffee maker for preparing fresh coffee at home or work.",
+    "category": 2,
+    "tags": [
+      2,
+      8
+    ]
+  }
+},
+{
+  "model": "core.product",
+  "pk": 7,
+  "fields": {
+    "name": "Stainless Steel Kettle",
+    "description": "Durable stainless steel kettle for quickly boiling water.",
+    "category": 2,
+    "tags": [
+      2,
+      6
+    ]
+  }
+},
+{
+  "model": "core.product",
+  "pk": 8,
+  "fields": {
+    "name": "Food Storage Set",
+    "description": "Reusable food containers for storing meals and keeping food fresh.",
+    "category": 2,
+    "tags": [
+      4,
+      7
+    ]
+  }
+},
+{
+  "model": "core.product",
+  "pk": 9,
+  "fields": {
+    "name": "Non-Stick Frying Pan",
+    "description": "Durable non-stick frying pan suitable for everyday cooking.",
+    "category": 2,
+    "tags": [
+      2,
+      6
+    ]
+  }
+},
+{
+  "model": "core.product",
+  "pk": 10,
+  "fields": {
+    "name": "Cordless Drill",
+    "description": "Rechargeable cordless drill for home repairs and improvement projects.",
+    "category": 3,
+    "tags": [
+      1,
+      4,
+      6
+    ]
+  }
+},
+{
+  "model": "core.product",
+  "pk": 11,
+  "fields": {
+    "name": "Hammer Set",
+    "description": "Durable hammer set suitable for common household repair tasks.",
+    "category": 3,
+    "tags": [
+      6,
+      10
+    ]
+  }
+},
+{
+  "model": "core.product",
+  "pk": 12,
+  "fields": {
+    "name": "Screwdriver Kit",
+    "description": "Compact screwdriver kit with multiple tools for basic repairs.",
+    "category": 3,
+    "tags": [
+      8,
+      10
+    ]
+  }
+},
+{
+  "model": "core.product",
+  "pk": 13,
+  "fields": {
+    "name": "Measuring Tape",
+    "description": "Portable measuring tape for accurate home and workshop measurements.",
+    "category": 3,
+    "tags": [
+      1,
+      4
+    ]
+  }
+},
+{
+  "model": "core.product",
+  "pk": 14,
+  "fields": {
+    "name": "Desk Organizer",
+    "description": "Compact desk organizer for keeping office supplies neat and accessible.",
+    "category": 4,
+    "tags": [
+      7,
+      8
+    ]
+  }
+},
+{
+  "model": "core.product",
+  "pk": 15,
+  "fields": {
+    "name": "Ergonomic Mouse Pad",
+    "description": "Comfortable mouse pad designed to support everyday computer use.",
+    "category": 4,
+    "tags": [
+      2,
+      8
+    ]
+  }
+},
+{
+  "model": "core.product",
+  "pk": 16,
+  "fields": {
+    "name": "Notebook Set",
+    "description": "Eco-friendly notebook set for writing notes, ideas, and reminders.",
+    "category": 4,
+    "tags": [
+      4,
+      7
+    ]
+  }
+},
+{
+  "model": "core.product",
+  "pk": 17,
+  "fields": {
+    "name": "Adjustable Laptop Stand",
+    "description": "Portable adjustable stand for improving laptop height and viewing position.",
+    "category": 4,
+    "tags": [
+      1,
+      9
+    ]
+  }
+},
+{
+  "model": "core.product",
+  "pk": 18,
+  "fields": {
+    "name": "Yoga Mat",
+    "description": "Lightweight yoga mat for stretching, exercise, and home workouts.",
+    "category": 5,
+    "tags": [
+      1,
+      10
+    ]
+  }
+},
+{
+  "model": "core.product",
+  "pk": 19,
+  "fields": {
+    "name": "Camping Lantern",
+    "description": "Portable and durable lantern for camping and outdoor activities.",
+    "category": 5,
+    "tags": [
+      1,
+      6
+    ]
+  }
+},
+{
+  "model": "core.product",
+  "pk": 20,
+  "fields": {
+    "name": "Resistance Bands",
+    "description": "Compact resistance bands for strength training and beginner-friendly workouts.",
+    "category": 5,
+    "tags": [
+      3
+    ]
+  }
+}
+]
