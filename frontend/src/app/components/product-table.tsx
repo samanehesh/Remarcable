@@ -7,6 +7,8 @@ import { Product } from "../types/product";
 type ProductTableProps = {
   products: Product[];
   isLoading: boolean;
+  error: string | null;
+  onRetry: () => void;
 };
 
 type SortKey = "name" | "category";
@@ -15,6 +17,8 @@ type SortDirection = "ascending" | "descending";
 export default function ProductTable({
   products,
   isLoading,
+  error,
+  onRetry,
 }: ProductTableProps) {
   const [sortKey, setSortKey] = useState<SortKey>("name");
   const [sortDirection, setSortDirection] =
@@ -84,6 +88,8 @@ export default function ProductTable({
               <span className="size-4 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600 motion-reduce:animate-none" />
               Loading products…
             </>
+          ) : error ? (
+            "Products unavailable"
           ) : (
             <>
               {products.length} {products.length === 1 ? "product" : "products"}
@@ -115,6 +121,38 @@ export default function ProductTable({
               </div>
             </div>
           ))
+        ) : error ? (
+          <div
+            role="alert"
+            className="rounded-xl border border-red-200 bg-red-50 px-5 py-8 text-center shadow-sm"
+          >
+            <div className="mx-auto grid size-10 place-items-center rounded-full bg-red-100 text-red-600">
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                className="size-5"
+              >
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 8v5m0 3h.01" />
+              </svg>
+            </div>
+            <p className="mt-3 font-semibold text-red-950">
+              Products couldn&apos;t be loaded
+            </p>
+            <p className="mx-auto mt-1 max-w-sm text-sm leading-6 text-red-800">
+              {error}
+            </p>
+            <button
+              type="button"
+              onClick={onRetry}
+              className="mt-4 rounded-lg bg-red-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2"
+            >
+              Try again
+            </button>
+          </div>
         ) : products.length === 0 ? (
           <div className="rounded-xl border border-slate-200 bg-white px-5 py-12 text-center text-sm text-slate-500 shadow-sm">
             No products match the selected filters.
@@ -230,6 +268,39 @@ export default function ProductTable({
                   </td>
                 </tr>
               ))
+            ) : error ? (
+              <tr>
+                <td colSpan={4} className="px-5 py-12 text-center">
+                  <div role="alert" className="mx-auto max-w-md">
+                    <div className="mx-auto grid size-10 place-items-center rounded-full bg-red-100 text-red-600">
+                      <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        className="size-5"
+                      >
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M12 8v5m0 3h.01" />
+                      </svg>
+                    </div>
+                    <p className="mt-3 font-semibold text-red-950">
+                      Products couldn&apos;t be loaded
+                    </p>
+                    <p className="mt-1 text-sm leading-6 text-red-800">
+                      {error}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={onRetry}
+                      className="mt-4 rounded-lg bg-red-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2"
+                    >
+                      Try again
+                    </button>
+                  </div>
+                </td>
+              </tr>
             ) : products.length === 0 ? (
               <tr>
                 <td

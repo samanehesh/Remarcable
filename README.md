@@ -1,164 +1,154 @@
-# Remarcable Django Take-Home Assignment
+# Remarcable Product Search
 
-This project is a simple product search and filtering application built with Django for the backend and Next.js for the frontend.
+Remarcable is a full-stack product search and filtering application built with
+Django and Next.js. It demonstrates Django model relationships, optimized
+QuerySets, JSON endpoints, responsive React components, and separate frontend
+and backend deployments.
 
-The application models products, categories, and tags, and allows users to search and filter products using Django QuerySets.
+## Live Application
+
+- Frontend: [remarcable-lac.vercel.app](https://remarcable-lac.vercel.app/)
+- Products API: [remarcable-e13c73d78037.herokuapp.com/api/products/](https://remarcable-e13c73d78037.herokuapp.com/api/products/)
+- Django Admin: [remarcable-e13c73d78037.herokuapp.com/admin/](https://remarcable-e13c73d78037.herokuapp.com/admin/)
+
+The Next.js frontend is deployed on Vercel. The Django API and PostgreSQL
+database are deployed on Heroku.
 
 ## Features
 
-- Product, Category, and Tag models
-- Django Admin for sample data management
-- Search products by description
-- Filter products by category
-- Filter products by one or more tags
-- Combine search, category, and tag filters
-- Simple Next.js frontend
-- Django JSON API endpoints
-- Efficient related-object loading with Django QuerySets
+- Live, debounced description search without a submit button
+- Category filtering
+- Multi-tag filtering that requires products to match every selected tag
+- Combinable search, category, and tag filters
+- Filters synchronized with URL query parameters for refreshable, shareable URLs
+- Collapsible filter panel with active-filter count
+- Sortable Name and Category columns
+- Responsive desktop table and mobile product cards
+- Loading spinner, skeleton rows, and skeleton cards
+- Friendly API error messages with retry buttons
+- Clear filters action
+- Django Admin for product, category, and tag management
+- Optimized related-object loading with Django QuerySets
+- Local SQLite and production PostgreSQL support
 
-## Tech Stack
+## Technology
 
 ### Backend
 
-- Python
-- Django
-- SQLite
+- Python 3.14
+- Django 6.1
+- PostgreSQL in production
+- SQLite for local development
+- Gunicorn
+- WhiteNoise
 - django-cors-headers
+- psycopg
 
 ### Frontend
 
-- Next.js
-- React
+- Next.js 16
+- React 19
 - TypeScript
+- Tailwind CSS 4
+
+### Hosting
+
+- Vercel: Next.js frontend
+- Heroku: Django API and managed PostgreSQL
 
 ## Project Structure
 
 ```text
 Remarcable/
-├── config/
-├── core/
-├── frontend/
-├── manage.py
-├── db.sqlite3
-├── requirements.txt
-├── .gitignore
-└── README.md
+|-- config/                     # Django project configuration
+|-- core/                       # Models, views, URLs, admin, tests, migrations
+|   `-- fixtures/products.json  # Sample product data for PostgreSQL
+|-- frontend/
+|   `-- src/app/
+|       |-- components/
+|       |   |-- product-filters.tsx
+|       |   |-- product-table.tsx
+|       |   `-- products-page.tsx
+|       |-- types/
+|       `-- page.tsx
+|-- .python-version
+|-- Procfile
+|-- db.sqlite3
+|-- manage.py
+|-- requirements.txt
+`-- README.md
 ```
 
-## Data Models
+## Data Model
 
-The application contains three main models.
+The application contains three models:
 
-### Category
+- `Category`: has a unique name and can contain many products.
+- `Tag`: has a unique name and can belong to many products.
+- `Product`: has a name, description, one category, and zero or more tags.
 
-A category can contain multiple products.
+`Product.category` is a `ForeignKey`. `Product.tags` is a
+`ManyToManyField`.
 
-### Tag
+## Local Setup
 
-A tag can be associated with multiple products, and each product can have multiple tags.
+### Backend
 
-### Product
+Create and activate a virtual environment.
 
-Each product:
-
-- Has a name
-- Has a description
-- Belongs to one category
-- Can have multiple tags
-
-The relationship between Product and Category is implemented using a Django `ForeignKey`.
-
-The relationship between Product and Tag is implemented using a Django `ManyToManyField`.
-
-## Sample Data
-
-The SQLite database contains sample data created through the Django Admin interface.
-
-The database includes:
-
-- 5 categories
-- 10 tags
-- 20 products
-
-## Backend Setup
-
-### 1. Create a virtual environment
-
-On Windows:
+Windows:
 
 ```powershell
 py -m venv venv
 .\venv\Scripts\Activate.ps1
 ```
 
-On macOS or Linux:
+macOS or Linux:
 
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 2. Install dependencies
+Install dependencies, apply migrations, and start Django:
 
 ```bash
 pip install -r requirements.txt
-```
-
-### 3. Apply migrations
-
-```bash
 python manage.py migrate
-```
-
-### 4. Run the Django development server
-
-```bash
 python manage.py runserver
 ```
 
-The backend will run at:
+The local API runs at `http://127.0.0.1:8000`.
 
-```text
-http://127.0.0.1:8000
+To load the included sample fixture into an empty database:
+
+```bash
+python manage.py loaddata products
 ```
 
-## Frontend Setup
+### Frontend
 
-Open another terminal and move into the frontend directory:
+In a second terminal:
 
 ```bash
 cd frontend
-```
-
-Install the frontend dependencies:
-
-```bash
 npm install
-```
-
-Run the Next.js development server:
-
-```bash
 npm run dev
 ```
 
-The frontend will run at:
+The frontend runs at `http://localhost:3000` and uses
+`http://127.0.0.1:8000` by default.
 
-```text
-http://localhost:3000
+To use a different backend, create `frontend/.env.local`:
+
+```env
+NEXT_PUBLIC_API_BASE_URL=https://example-backend.herokuapp.com
 ```
 
-## How to Use
+Do not include a trailing slash in the API base URL. The frontend also removes
+trailing slashes defensively before constructing endpoint URLs.
 
-1. Start both the Django backend and Next.js frontend.
-2. Open `http://localhost:3000`.
-3. Enter text in the search field to search product descriptions.
-4. Select a category to filter products by category.
-5. Select one or more tags to filter products by tags.
-6. Search, category, and tag filters can be combined.
-7. Use the Clear Filters button to reset the results.
-
-## API Endpoints
+## API
 
 ### Products
 
@@ -166,19 +156,20 @@ http://localhost:3000
 GET /api/products/
 ```
 
-Returns all products.
-
 Supported query parameters:
 
-- `search`
-- `category`
-- `tags`
+- `search`: case-insensitive product-description search
+- `category`: category ID
+- `tags`: repeatable tag ID
 
 Example:
 
 ```text
-/api/products/?search=wireless&category=1&tags=2&tags=5
+/api/products/?search=portable&category=2&tags=1&tags=5
 ```
+
+Different filter types are combined. When multiple tags are provided, a product
+must have all selected tags.
 
 ### Categories
 
@@ -186,31 +177,27 @@ Example:
 GET /api/categories/
 ```
 
-Returns all categories.
-
 ### Tags
 
 ```text
 GET /api/tags/
 ```
 
-Returns all tags.
+## Filtering Implementation
 
-## Search and Filtering
-
-Products can be searched by description using Django's case-insensitive `icontains` lookup:
+Description search uses Django's case-insensitive lookup:
 
 ```python
 products = products.filter(description__icontains=search)
 ```
 
-Products can be filtered by category:
+Category filtering uses the related category ID:
 
 ```python
-products = products.filter(category_id=category)
+products = products.filter(category__id=category)
 ```
 
-Products can be filtered by selected tags:
+Tag filters are chained to require every selected tag:
 
 ```python
 for tag_id in dict.fromkeys(tags):
@@ -218,78 +205,99 @@ for tag_id in dict.fromkeys(tags):
 products = products.distinct()
 ```
 
-Chaining one filter per selected tag requires every returned product to have all
-selected tags. The `distinct()` method prevents duplicate products caused by the
-many-to-many joins.
+The product QuerySet uses `select_related("category")` and
+`prefetch_related("tags")` to avoid unnecessary related-object queries.
 
-Search and filters can also be combined.
+## Tests and Validation
 
-Example:
-
-```text
-/api/products/?search=portable&category=5&tags=1
-```
-
-## Query Optimization
-
-The product queryset uses:
-
-```python
-select_related("category")
-```
-
-for the `ForeignKey` relationship between Product and Category.
-
-It also uses:
-
-```python
-prefetch_related("tags")
-```
-
-for the many-to-many relationship between Product and Tag.
-
-This helps reduce unnecessary database queries when loading related data.
-
-## Django Admin
-
-The Django Admin interface was used to create the sample categories, tags, and products.
-
-The admin page is available at:
-
-```text
-http://127.0.0.1:8000/admin/
-```
-
-A local admin user can be created with:
+Run backend checks and tests from the repository root:
 
 ```bash
-python manage.py createsuperuser
+python manage.py check
+python manage.py test
+python manage.py collectstatic --noinput
 ```
+
+The backend tests verify single-tag filtering and all-selected-tag matching.
+
+Run frontend validation from `frontend/`:
+
+```bash
+npm run lint
+npx tsc --noEmit
+npm run build
+```
+
+## Deployment
+
+### Heroku Backend
+
+The root `Procfile` defines the release and web processes:
+
+```text
+release: python manage.py migrate
+web: gunicorn config.wsgi
+```
+
+Required Heroku config variables:
+
+```text
+SECRET_KEY
+DEBUG=False
+ALLOWED_HOSTS=<heroku-hostname>
+CSRF_TRUSTED_ORIGINS=https://<heroku-hostname>
+DATABASE_URL=<provided automatically by Heroku Postgres>
+```
+
+Production settings read `DATABASE_URL` through `dj-database-url`. WhiteNoise
+serves collected Django and Admin static files.
+
+Load the sample fixture after initializing a new production database:
+
+```bash
+heroku run python manage.py loaddata products -a remarcable
+```
+
+### Vercel Frontend
+
+Import the repository into Vercel and set the project Root Directory to
+`frontend`. Configure:
+
+```text
+NEXT_PUBLIC_API_BASE_URL=https://remarcable-e13c73d78037.herokuapp.com
+```
+
+After changing a `NEXT_PUBLIC_` variable, redeploy the frontend because its value
+is embedded during the Next.js build.
+
+The Vercel production origin must also be present in Django's
+`CORS_ALLOWED_ORIGINS`.
 
 ## Assumptions
 
-- Each product belongs to one category.
-- A product may have multiple tags.
-- A tag may belong to multiple products.
-- Selecting multiple tags returns only products that match all selected tags.
-- Search is performed against the product description only, according to the assignment requirements.
-- Search is case-insensitive.
-- Styling is intentionally minimal because the assignment focuses primarily on Django models, relationships, QuerySets, views, and filtering functionality.
-- SQLite is used for simplicity and portability.
+- Each product belongs to exactly one category.
+- Products can have zero or more tags.
+- Selecting multiple tags requires a product to match all selected tags.
+- Search applies to product descriptions and is case-insensitive.
+- URL filters are replaced rather than appended to browser history on every
+  keystroke.
+- SQLite is intended for local development; PostgreSQL is used in production.
+
+## Future Development
+
+- Add backend pagination and paginated table controls
+- Add product detail pages
+- Add product images, prices, and inventory fields
+- Add authenticated product-management workflows outside Django Admin
+- Add frontend component and end-to-end tests
+- Add structured API error responses and request logging
+- Add monitoring and deployment health checks
+- Add rate limiting for public API endpoints
+- Add CI checks for Django tests, TypeScript, linting, and production builds
 
 ## AI Assistance
 
-ChatGPT was used as an assistance tool during development.
-
-It was used for:
-
-- Guidance on structuring the Django and Next.js project
-- Reviewing Django model relationships
-- Discussing Django QuerySet implementation
-- Guidance on connecting the Next.js frontend to the Django backend
-- Reviewing query optimization using `select_related()` and `prefetch_related()`
-- Assistance with project documentation
-
-All submitted code was reviewed, understood, tested, and adapted during development.
-
-I am prepared to explain the Django models, relationships, QuerySets, filtering logic, API endpoints, and frontend/backend integration.
+ChatGPT was used for project-structure guidance, model and QuerySet review,
+frontend/backend integration, UI refinement, deployment configuration, testing,
+and documentation. All code was reviewed, understood, tested, and adapted during
+development.
